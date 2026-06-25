@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mbok Mandeg – Catering & Gudeg Jogja</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:       #C0181A;
+    --red-2:     #E02020;
+    --orange:    #E07B00;
+    --gold:      #D4A017;
+    --gold-lt:   #F0C040;
+    --gold-muted:rgba(212,160,23,.5);
+    --offwhite:  #FAF9F6;
+    --ivory:     #F5F0E8;
+    --dark:      #1A0A00;
+    --gray:      #5C5248;
+    --gray-lt:   #8A8078;
+    --white:     #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--offwhite); color: var(--dark); line-height: 1.6; font-size: 16px; padding-top: 68px; }
+
+  /* ── NAV ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(26,10,0,.96); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 68px; border-bottom: 1px solid rgba(212,160,23,.2); }
+  .nav-brand { font-family: 'Cormorant Garamond', serif; color: var(--gold-lt); font-size: 1.45rem; font-weight: 700; text-decoration: none; letter-spacing: .02em; }
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+  .nav-links a { color: #d4c8b0; text-decoration: none; font-size: .88rem; font-weight: 400; transition: color .2s; }
+  .nav-links a:hover { color: var(--gold-lt); }
+  .menu-toggle { display: none; background: none; border: none; color: var(--gold-lt); font-size: 1.4rem; cursor: pointer; padding: 8px; min-width: 48px; min-height: 48px; }
+
+  /* ── HERO ── */
+  .hero { min-height: calc(100vh - 68px); display: grid; place-items: center; text-align: center; padding: 80px 24px 60px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background-image: url('1002470884.jpg'); background-size: cover; background-position: center; }
+  .hero-bg::after { content: ''; position: absolute; inset: 0; background: rgba(26,10,0,.50); }
+  .hero-content { position: relative; z-index: 2; max-width: 760px; }
+  .hero-ornament { font-size: .85rem; letter-spacing: .38em; color: var(--gold-lt); text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .hero-ornament::before, .hero-ornament::after { content: ''; width: 44px; height: 1px; background: var(--gold-muted); }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 8vw, 5.5rem); color: var(--white); line-height: 1.08; margin-bottom: 16px; text-shadow: 0 2px 28px rgba(0,0,0,.5); font-weight: 700; }
+  .hero h1 span { color: var(--gold-lt); font-style: italic; }
+  .hero-sub { font-size: clamp(1.05rem, 2.5vw, 1.35rem); color: rgba(245,240,232,.9); font-style: italic; font-family: 'Cormorant Garamond', serif; margin-bottom: 44px; }
+  .hero-cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); color: var(--gold-muted); font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; animation: bounce 2.2s infinite; z-index: 2; }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(7px)} }
+
+  /* ── BUTTONS ── */
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 15px 34px; border-radius: 8px; font-weight: 600; font-size: .9rem; text-decoration: none; cursor: pointer; border: none; transition: transform .18s, box-shadow .18s, background .18s; letter-spacing: .04em; font-family: inherit; min-height: 48px; }
+  .btn:hover { transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,0,0,.22); }
+  .btn-primary { background: var(--red); color: var(--white); }
+  .btn-primary:hover { background: var(--red-2); }
+  .btn-secondary { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,.55); }
+  .btn-secondary:hover { background: rgba(255,255,255,.12); border-color: var(--gold-lt); color: var(--gold-lt); }
+  .btn-gold { background: var(--gold); color: var(--dark); }
+  .btn-gold:hover { background: var(--gold-lt); }
+  .btn-outline-red { background: transparent; color: var(--red); border: 1.5px solid var(--red); }
+  .btn-outline-red:hover { background: var(--red); color: var(--white); }
+
+  /* ── SECTIONS ── */
+  section { padding: 96px 24px; }
+  .container { max-width: 1140px; margin: 0 auto; }
+  .section-label { font-size: .75rem; letter-spacing: .32em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; font-weight: 600; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4.5vw, 36px); color: var(--red); margin-bottom: 18px; font-weight: 700; line-height: 1.2; }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .divider { width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 52px; border-radius: 2px; }
+
+  /* ── ABOUT ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .about-img { border-radius: 8px; overflow: hidden; position: relative; }
+  .about-img img { width: 100%; display: block; object-fit: cover; height: 460px; border-radius: 8px; }
+  .about-img::after { content: ''; position: absolute; top: 14px; left: 14px; right: -10px; bottom: -10px; border: 1.5px solid var(--gold-muted); border-radius: 8px; z-index: -1; }
+  .about-text p { color: var(--gray); font-size: 1rem; margin-bottom: 20px; line-height: 1.8; }
+  .about-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 36px; }
+  .stat { text-align: center; padding: 22px 12px; border: 1px solid rgba(212,160,23,.25); border-radius: 8px; background: var(--white); transition: box-shadow .2s; }
+  .stat:hover { box-shadow: 0 4px 20px rgba(212,160,23,.14); }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 700; color: var(--gold); display: block; line-height: 1.2; }
+  .stat-lbl { font-size: .78rem; color: var(--gray-lt); font-weight: 500; }
+
+  /* ── MENU (dark red bg) ── */
+  #menu { background: var(--red); }
+  #menu .section-title { color: var(--white); }
+  #menu .section-title em { color: var(--gold-lt); }
+  #menu .section-label { color: var(--gold-lt); }
+  .menu-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+  .tab-btn { padding: 10px 22px; border-radius: 30px; border: 1.5px solid rgba(240,192,64,.5); background: transparent; color: rgba(240,192,64,.85); font-size: .85rem; font-weight: 500; cursor: pointer; transition: all .22s; font-family: inherit; min-height: 44px; }
+  .tab-btn.active, .tab-btn:hover { background: var(--gold-lt); color: var(--red); border-color: var(--gold-lt); box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .menu-card { background: rgba(255,255,255,.07); border: 1px solid rgba(212,160,23,.25); border-radius: 10px; padding: 24px; transition: all .22s; display: flex; flex-direction: column; }
+  .menu-card:hover { border-color: var(--gold-lt); background: rgba(255,255,255,.12); transform: translateY(-3px); }
+  .menu-card .price-tag { align-self: flex-start; background: var(--gold); color: var(--dark); font-size: .74rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
+  .menu-card h3 { font-family: 'Cormorant Garamond', serif; color: var(--gold-lt); font-size: 1.3rem; margin-bottom: 12px; font-weight: 700; }
+  .menu-card ul { list-style: none; padding: 0; margin-top: auto; }
+  .menu-card ul li { color: #f0d8c0; font-size: .86rem; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,.07); line-height: 1.45; }
+  .menu-card ul li:last-child { border-bottom: none; }
+
+  /* ── BUFFET PRICING ── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+  .price-card { border: 1.5px solid rgba(212,160,23,.2); border-radius: 12px; padding: 40px 28px; position: relative; overflow: hidden; transition: all .3s ease; background: var(--white); display: flex; flex-direction: column; }
+  .price-card:hover { border-color: var(--gold); box-shadow: 0 14px 44px rgba(212,160,23,.18); transform: translateY(-5px); }
+  .price-card.featured { border-color: var(--gold); background: linear-gradient(150deg, #fffbf0 0%, #fff 100%); box-shadow: 0 8px 28px rgba(212,160,23,.12); }
+  .price-card.featured::before { content: '✦ TERLARIS'; position: absolute; top: 0; right: 0; background: var(--gold); color: var(--dark); font-size: .64rem; font-weight: 700; letter-spacing: .15em; padding: 6px 18px; border-bottom-left-radius: 12px; }
+  .price-amount { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: var(--red); line-height: 1.15; }
+  .price-unit { font-size: 16px; font-weight: 500; color: var(--gray); margin-bottom: 24px; }
+  .price-features { list-style: none; padding: 0; margin-bottom: 32px; flex-grow: 1; }
+  .price-features li { font-size: .88rem; color: var(--gray); padding: 8px 0; border-bottom: 1px solid var(--ivory); display: flex; gap: 9px; align-items: flex-start; line-height: 1.5; }
+  .price-features li::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; }
+  .price-card .btn { width: 100%; margin-top: auto; }
+
+  /* ── KALKULATOR ── */
+  #kalkulator { position: relative; overflow: hidden; }
+  .calc-bg { position: absolute; inset: 0; background-image: url('1002470826.jpg'); background-size: cover; background-position: center; }
+  .calc-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(192,24,26,.97), rgba(26,10,0,.95)); }
+  #kalkulator .container { position: relative; z-index: 2; }
+  #kalkulator .section-title { color: var(--white); }
+  #kalkulator .section-title em { color: var(--gold-lt); }
+  #kalkulator .section-label { color: var(--gold-lt); }
+  #kalkulator .divider { background: linear-gradient(90deg, var(--gold-lt), transparent); }
+  .calc-wrapper { background: rgba(20,6,0,.65); backdrop-filter: blur(10px); border: 1px solid rgba(212,160,23,.3); border-radius: 12px; padding: 44px; max-width: 820px; margin: 0 auto; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+  .calc-hint { color: rgba(240,192,64,.85); font-size: .9rem; margin-bottom: 28px; line-height: 1.6; }
+  .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
+  .calc-field label { display: block; font-size: .76rem; color: var(--gold-lt); font-weight: 600; letter-spacing: .06em; margin-bottom: 10px; text-transform: uppercase; }
+  .calc-field select, .calc-field input { width: 100%; padding: 14px 16px; border-radius: 8px; border: 1.5px solid rgba(212,160,23,.3); background: rgba(0,0,0,.4); color: var(--white); font-family: inherit; font-size: .95rem; outline: none; transition: border-color .2s, box-shadow .2s; min-height: 48px; }
+  .calc-field select:focus, .calc-field input:focus { border-color: var(--gold-lt); box-shadow: 0 0 0 3px rgba(240,192,64,.18); }
+  .calc-field select option { background: #3a0a00; color: var(--white); }
+  #menu-detail { background: rgba(212,160,23,.12); border: 1px solid rgba(212,160,23,.3); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: .86rem; color: var(--gold-lt); line-height: 1.7; min-height: 48px; }
+
+  /* Progress bar */
+  .calc-progress { margin: 20px 0; }
+  .progress-labels { display: flex; justify-content: space-between; font-size: .72rem; color: rgba(255,255,255,.5); margin-bottom: 8px; }
+  .progress-track { height: 6px; background: rgba(255,255,255,.1); border-radius: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--orange), var(--gold-lt)); border-radius: 6px; transition: width .5s cubic-bezier(.4,0,.2,1); width: 0%; }
+  .progress-badge { text-align: center; margin-top: 8px; }
+  .budget-badge { display: inline-block; font-size: .76rem; font-weight: 600; padding: 3px 14px; border-radius: 20px; letter-spacing: .08em; }
+  .badge-friendly { background: rgba(45,106,79,.35); color: #7dcea0; border: 1px solid rgba(45,106,79,.5); }
+  .badge-mid { background: rgba(212,160,23,.22); color: var(--gold-lt); border: 1px solid rgba(212,160,23,.4); }
+  .badge-premium { background: rgba(192,24,26,.35); color: #f0a0a0; border: 1px solid rgba(192,24,26,.5); }
+
+  /* Cart */
+  .cart-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(255,255,255,.05); border: 1px solid rgba(212,160,23,.18); border-radius: 8px; padding: 13px 16px; margin-bottom: 8px; }
+  .cart-item:hover { border-color: rgba(212,160,23,.35); }
+  .cart-item-name { color: var(--gold-lt); font-weight: 600; font-size: .9rem; }
+  .cart-item-sub { color: rgba(255,255,255,.55); font-size: .8rem; margin-top: 2px; }
+  .cart-del { background: rgba(100,20,20,.7); border: none; color: #fff; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 1.1rem; flex-shrink: 0; transition: background .2s; display: flex; align-items: center; justify-content: center; }
+  .cart-del:hover { background: rgba(160,30,30,.9); }
+  .calc-result { background: rgba(212,160,23,.1); border: 1px solid rgba(240,192,64,.4); border-radius: 10px; padding: 32px; text-align: center; margin-top: 28px; }
+  .result-label { font-size: .78rem; color: rgba(240,192,64,.75); letter-spacing: .22em; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+  .result-total { font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; font-weight: 700; color: var(--gold-lt); line-height: 1; }
+  .result-breakdown { font-size: .84rem; color: rgba(255,255,255,.7); margin-top: 16px; line-height: 1.8; white-space: pre-line; text-align: left; background: rgba(0,0,0,.2); padding: 16px; border-radius: 6px; max-height: 200px; overflow-y: auto; }
+  .calc-note { font-size: .74rem; color: rgba(255,255,255,.42); text-align: center; margin-top: 20px; font-style: italic; }
+
+  /* Sticky WA */
+  .sticky-wa { position: fixed; bottom: 24px; right: 24px; z-index: 900; width: 58px; height: 58px; border-radius: 50%; background: #25D366; box-shadow: 0 4px 20px rgba(37,211,102,.5); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform .25s; animation: wa-pulse 2.5s ease-in-out infinite; }
+  .sticky-wa:hover { transform: scale(1.1); animation: none; }
+  .sticky-wa svg { width: 30px; height: 30px; }
+  @keyframes wa-pulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.5)} 50%{box-shadow:0 4px 28px rgba(37,211,102,.8),0 0 0 8px rgba(37,211,102,.15)} }
+
+  /* Galeri masonry */
+  .gallery-masonry { columns: 3; column-gap: 12px; }
+  .gallery-item { break-inside: avoid; margin-bottom: 12px; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item img { width: 100%; display: block; transition: transform .5s cubic-bezier(.16,1,.3,1); border-radius: 8px; }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-overlay { position: absolute; inset: 0; border-radius: 8px; background: rgba(26,10,0,.82); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s; padding: 16px; text-align: center; }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay-title { color: var(--gold-lt); font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+  .gallery-overlay-tag { color: rgba(255,255,255,.75); font-size: .78rem; }
+  .gallery-badge { position: absolute; top: 10px; right: 10px; background: var(--gold); color: var(--dark); font-size: .65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: .1em; z-index: 2; }
+
+  /* Fasilitas */
+  .fasilitas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; }
+  .fas-card { background: var(--white); border: 1px solid rgba(212,160,23,.2); border-radius: 10px; padding: 32px 24px; transition: all .22s; }
+  .fas-card:hover { box-shadow: 0 10px 32px rgba(212,160,23,.14); transform: translateY(-3px); }
+  .fas-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+  .fas-card h4 { font-family: 'Cormorant Garamond', serif; color: var(--red); font-size: 1.3rem; margin-bottom: 10px; font-weight: 700; }
+  .fas-card p { font-size: .88rem; color: var(--gray); line-height: 1.65; }
+
+  /* Kontak */
+  #kontak { background: var(--red); }
+  #kontak .section-title { color: var(--white); }
+  #kontak .section-title em { color: var(--gold-lt); }
+  #kontak .section-label { color: var(--gold-lt); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .contact-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px; }
+  .contact-icon { width: 46px; height: 46px; background: rgba(212,160,23,.14); border: 1px solid rgba(212,160,23,.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .contact-item h4 { font-size: .76rem; color: var(--gold-lt); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+  .contact-item p, .contact-item a { font-size: .95rem; color: #f0d8c0; text-decoration: none; line-height: 1.6; }
+  .contact-item a:hover { color: var(--gold-lt); }
+  .wa-btn { display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: #fff; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; margin-top: 12px; transition: background .2s, transform .18s; box-shadow: 0 4px 16px rgba(37,211,102,.25); }
+  .wa-btn:hover { background: #20ba59; transform: translateY(-2px); }
+  .reason-box { background: rgba(255,255,255,.06); border: 1px solid rgba(212,160,23,.2); border-radius: 10px; padding: 32px; }
+  .reason-box h3 { font-family: 'Cormorant Garamond', serif; color: var(--gold-lt); margin-bottom: 20px; font-size: 1.4rem; font-weight: 700; }
+  .reason-box ol { padding-left: 20px; }
+  .reason-box li { font-size: .88rem; color: rgba(240,216,192,.85); line-height: 1.75; margin-bottom: 10px; }
+
+  footer { background: var(--dark); text-align: center; padding: 40px 24px; color: #6a5840; font-size: .84rem; border-top: 1px solid rgba(255,255,255,.05); }
+  footer strong { color: var(--gold-lt); font-weight: 500; }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 992px) { .gallery-masonry { columns: 2; } }
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; height: 60px; }
+    body { padding-top: 60px; font-size: 16px; }
+    .menu-toggle { display: flex; }
+    .nav-links { position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(26,10,0,.98); flex-direction: column; padding: 40px 28px; gap: 0; transform: translateX(100%); transition: transform .3s ease; z-index: 999; backdrop-filter: blur(16px); align-items: flex-start; list-style: none; display: flex; }
+    .nav-links.open { transform: translateX(0); }
+    .nav-links li { width: 100%; }
+    .nav-links a { font-size: 1.1rem; display: block; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.07); min-height: 48px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-img::after { display: none; }
+    .calc-row { grid-template-columns: 1fr; gap: 16px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .calc-wrapper { padding: 28px 20px; }
+    section { padding: 72px 20px; }
+    .gallery-masonry { columns: 2; }
+    .section-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Mbok Mandeg</a>
+  <button class="menu-toggle" onclick="toggleNav()">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#tentang" onclick="closeNav()">Tentang</a></li>
+    <li><a href="#menu" onclick="closeNav()">Menu</a></li>
+    <li><a href="#buffet" onclick="closeNav()">Buffet</a></li>
+    <li><a href="#kalkulator" onclick="closeNav()">Kalkulator</a></li>
+    <li><a href="#galeri" onclick="closeNav()">Galeri</a></li>
+    <li><a href="#kontak" onclick="closeNav()">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- STICKY WA -->
+<a href="https://wa.me/6281229000959?text=Halo%20Mbok%20Mandeg%2C%20saya%20ingin%20konsultasi%20catering%20🙏" id="stickyWa" class="sticky-wa" target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.47.676 4.78 1.854 6.76L2 30l7.47-1.822A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff"/>
+    <path d="M16 4c6.627 0 12 5.373 12 12s-5.373 12-12 12a11.94 11.94 0 01-6.03-1.63l-.43-.26-4.44 1.08 1.12-4.32-.28-.45A11.94 11.94 0 014 16C4 9.373 9.373 4 16 4z" fill="#25D366"/>
+    <path d="M11.93 9.5c-.28 0-.73.1-1.11.52-.38.41-1.46 1.42-1.46 3.47s1.5 4.02 1.7 4.3c.21.27 2.93 4.7 7.2 6.4 1 .4 1.78.64 2.39.82.99.3 1.9.26 2.62.16.8-.12 2.46-.99 2.8-1.96.35-.96.35-1.79.25-1.96-.1-.17-.37-.27-.78-.47s-2.43-1.2-2.81-1.33c-.37-.14-.64-.2-.91.2s-1.04 1.33-1.28 1.6c-.23.27-.47.3-.88.1s-1.72-.63-3.27-2.02c-1.21-1.08-2.02-2.41-2.26-2.82-.23-.4-.02-.62.18-.82.18-.18.4-.47.6-.7.2-.23.26-.4.4-.67.13-.27.07-.5-.03-.7-.1-.2-.9-2.17-1.24-2.97-.33-.79-.66-.68-.91-.69h-.77z" fill="#fff"/>
+  </svg>
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-ornament">Catering Jogja</div>
+    <h1>Mbok<br><span>Mandeg</span></h1>
+    <p class="hero-sub">Lezatnya Istimewa</p>
+    <div class="hero-cta">
+      <a href="#kalkulator" class="btn btn-primary">Hitung Budget Saya</a>
+      <a href="#menu" class="btn btn-secondary">Lihat Menu Lengkap</a>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ scroll</div>
+</section>
+
+<!-- TENTANG -->
+<section id="tentang">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img reveal"><img src="1002470891.jpg" alt="Mbok Mandeg Catering Wedding" loading="lazy"></div>
+      <div class="about-text">
+        <p class="section-label">Tentang Kami</p>
+        <h2 class="section-title">Lezatnya <em>Istimewa</em></h2>
+        <div class="divider"></div>
+        <p>Mbok Mandeg hadir melayani kebutuhan katering pernikahan dan berbagai acara di Yogyakarta dengan sajian autentik khas Jawa. Dari wedding buffet eksklusif, hingga aneka gubug makanan dan minuman yang memanjakan tamu undangan.</p>
+        <p>Harga sudah termasuk <strong>penataan, hias meja, dan hiasan rangkaian bunga meja</strong> — semua siap tanpa biaya tambahan tersembunyi. Berlokasi di Jl. Parangtritis Km 2,5, Jogokaryan, Yogyakarta.</p>
+        <div class="about-stats">
+          <div class="stat reveal"><span class="stat-num">10+</span><span class="stat-lbl">Tahun Pengalaman</span></div>
+          <div class="stat reveal"><span class="stat-num">500+</span><span class="stat-lbl">Event Sukses</span></div>
+          <div class="stat reveal"><span class="stat-num">100%</span><span class="stat-lbl">Kepuasan Tamu</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="container">
+    <p class="section-label">Menu Lengkap</p>
+    <h2 class="section-title">Pilihan <em>Sajian Kami</em></h2>
+    <div class="divider"></div>
+    <div class="menu-tabs">
+      <button class="tab-btn active" onclick="showTab('buffet40',event)">Buffet 40rb</button>
+      <button class="tab-btn" onclick="showTab('buffet45',event)">Buffet 45rb</button>
+      <button class="tab-btn" onclick="showTab('buffet50',event)">Buffet 50rb</button>
+      <button class="tab-btn" onclick="showTab('buffet60',event)">Buffet 60rb</button>
+      <button class="tab-btn" onclick="showTab('gubug-mk',event)">Gubug Makanan</button>
+      <button class="tab-btn" onclick="showTab('gubug-mn',event)">Gubug Minuman</button>
+    </div>
+
+    <!-- BUFFET 40rb – 5 variasi -->
+    <div id="tab-buffet40" class="menu-panel active">
+      <div class="menu-card"><span class="price-tag">Rp 40.000 / porsi · Menu 1</span><h3>Variasi A</h3><ul><li>Nasi Putih · Sup Merah</li><li>Ayam Goreng Korea Pedas Manis</li><li>Telur Lapis Daging</li><li>Pakcoy Saus Tiram · Kerupuk</li><li>Dessert: Buah Potong</li><li>Minuman: Teh Panas / Es</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 40.000 / porsi · Menu 2</span><h3>Variasi B</h3><ul><li>Nasi Putih · Sup Rolade</li><li>Ayam Nangking</li><li>Baby Buncis Cah Ayam</li><li>Tahu Goreng Laguna · Sambal · Kerupuk</li><li>Dessert: Buah Potong</li><li>Minuman: Teh Panas / Es</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 40.000 / porsi · Menu 3</span><h3>Variasi C</h3><ul><li>Nasi Putih · Sup Jagung Sosis</li><li>Ayam Goreng Kremes</li><li>Telur Fuyunghai · Capcay Sayur</li><li>Sambal · Kerupuk</li><li>Dessert: Buah Potong</li><li>Minuman: Teh Panas / Es</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 40.000 / porsi · Menu 4</span><h3>Variasi D</h3><ul><li>Nasi Putih · Sup Rolade</li><li>Ayam Masak Lada Hitam</li><li>Tahu Udang 5 Rasa</li><li>Jagung Muda Cah Bakso · Sambal · Kerupuk</li><li>Dessert: Buah Potong</li><li>Minuman: Teh Panas / Es</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 40.000 / porsi · Menu 5</span><h3>Variasi E</h3><ul><li>Nasi Putih · Sup Rambutan</li><li>Ayam Bakar Kecap</li><li>Kembang Kol Cah Sosis</li><li>Tahu Saus Telur Asin · Sambal · Kerupuk</li><li>Dessert: Buah Potong</li><li>Minuman: Teh Panas / Es</li></ul></div>
+    </div>
+
+    <!-- BUFFET 45rb – 5 variasi -->
+    <div id="tab-buffet45" class="menu-panel">
+      <div class="menu-card"><span class="price-tag">Rp 45.000 / porsi · Menu 1</span><h3>Variasi A</h3><ul><li>Nasi Putih · Sup Mutiara</li><li>Ayam Bakar Taliwang</li><li>Cumi Masak Lada Garam · Kailan Cah Baso</li><li>Kerupuk Udang · Buah Potong / Puding</li><li>Minuman: Teh Panas / Es + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 45.000 / porsi · Menu 2</span><h3>Variasi B</h3><ul><li>Nasi Putih · Sup Sanghai</li><li>Ayam Bakar Bumbu Rujak</li><li>Cumi Goreng Tepung</li><li>Jagung Muda Cah Daging Giling · Sambal</li><li>Kerupuk Udang · Buah Potong / Puding</li><li>Minuman: Teh Panas / Es + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 45.000 / porsi · Menu 3</span><h3>Variasi C</h3><ul><li>Nasi Putih · Sup Tomyam</li><li>Chiken Kordon Bleu · Gurameh Pecak</li><li>Kembang Kol Cah Baso</li><li>Kerupuk Udang · Buah Potong / Puding</li><li>Minuman: Teh Panas / Es + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 45.000 / porsi · Menu 4</span><h3>Variasi D</h3><ul><li>Nasi Putih · Sup Cream Ayam Jamur</li><li>Ayam Turki · Udang Goreng Tepung</li><li>Kwetiau Goreng · Kerupuk Udang · Sambal</li><li>Buah Potong / Puding</li><li>Minuman: Teh Panas / Es + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 45.000 / porsi · Menu 5</span><h3>Variasi E</h3><ul><li>Nasi Putih · Sup Kimlo</li><li>Ayam Goreng Hongkong</li><li>Gurameh Krispy Bumbu Rujak · Sapo Tofu Ayam</li><li>Kerupuk Udang · Buah Potong / Puding</li><li>Minuman: Teh Panas / Es + Air Mineral Gelas</li></ul></div>
+    </div>
+
+    <!-- BUFFET 50rb – 6 variasi -->
+    <div id="tab-buffet50" class="menu-panel">
+      <div class="menu-card"><span class="price-tag">Rp 50.000 / porsi · Menu 1</span><h3>Variasi A</h3><ul><li>Nasi Putih · Sup Jagung Sosis</li><li>Ayam Mentega / Semur Ayam</li><li>Sambal Goreng Krecek / Asem Sandung Lamur</li><li>Mie Goreng Jawa · Sambal & Acar · Kerupuk Udang</li><li>Minuman: Es Orange Squash + Air Mineral</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 50.000 / porsi · Menu 2</span><h3>Variasi B</h3><ul><li>Nasi Putih · Sup Rambutan</li><li>Udang Saus Madu / Roll Udang Crispy</li><li>Brokoli Cah Daging Giling</li><li>Kwetiau Goreng Spesial / Pangsit Goreng Legino</li><li>Sambal & Acar · Kerupuk Udang</li><li>Minuman: Es Orange Squash + Air Mineral</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 50.000 / porsi · Menu 3</span><h3>Variasi C</h3><ul><li>Nasi Putih · Sup Mutiara</li><li>Empal Serundeng · Gurameh Saos Pesmol</li><li>Baby Buncis Cah Ayam · Sambal & Acar · Kerupuk Udang</li><li>Minuman: Es Orange Squash + Air Mineral</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 50.000 / porsi · Menu 4</span><h3>Variasi D</h3><ul><li>Nasi Putih · Sup Jamur Champigno</li><li>Kreni Daging Krecek · Cumi Crispy Asam Manis</li><li>Capcay Goreng Seafood · Sambal & Acar · Kerupuk Udang</li><li>Minuman: Es Orange Squash + Air Mineral</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 50.000 / porsi · Menu 5</span><h3>Variasi E</h3><ul><li>Nasi Putih · Ayam Chilipadi</li><li>Udang Goreng Tepung Saos Mayo</li><li>Capcay Ayam / Brokoli Cah Daging Giling</li><li>Mie Goreng Panjang Umur / Pangsit Goreng Legino</li><li>Sambal & Acar · Kerupuk Udang</li><li>Minuman: Es Orange Squash + Air Mineral</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 50.000 / porsi · Menu 6</span><h3>Variasi F</h3><ul><li>Nasi Putih · Sup Bola Bola Udang</li><li>Bistik Daging · Roll Udang Crispy</li><li>Oseng Jamur Tahu Sutra · Sambal & Acar · Kerupuk Udang</li><li>Minuman: Es Orange Squash + Air Mineral</li></ul></div>
+    </div>
+
+    <!-- BUFFET 60rb – 6 variasi -->
+    <div id="tab-buffet60" class="menu-panel">
+      <div class="menu-card"><span class="price-tag">Rp 60.000 / porsi · Menu 1</span><h3>Variasi A</h3><ul><li>Nasi Putih · Sup Rolade / Sup Rambutan</li><li>Dory Crispy Asam Manis / Udang Tempura Saos Mayo</li><li>Sambel Goreng Kreni Ayam</li><li>Mie Goreng Jawa / Pakley Sayur</li><li>Kerupuk Udang · Sambal & Acar</li><li>Minuman: Es Teler / Es Buah + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 60.000 / porsi · Menu 2</span><h3>Variasi B</h3><ul><li>Nasi Putih · Sup Bunga Sedap Malam</li><li>Gurameh Crispy Koloke / Udang Saos Padang</li><li>Sukiyaki Yakiniku</li><li>Sapo Tahu Special / Asem Daging</li><li>Kerupuk Udang · Sambal & Acar</li><li>Minuman: Es Teler / Es Buah + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 60.000 / porsi · Menu 3</span><h3>Variasi C</h3><ul><li>Nasi Putih · Sate Ayam</li><li>Udang Saos Padang / Saos Madu</li><li>Kwetiau Goreng Spesial · Pakley Ca Baso</li><li>Kerupuk Udang · Sambal & Acar</li><li>Minuman: Es Teler / Es Buah + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 60.000 / porsi · Menu 4</span><h3>Variasi D</h3><ul><li>Nasi Putih · Sayur Lodeh</li><li>Ayam Goreng Kalasan · Patin Bakar Madu</li><li>Telur Pindang · Kerupuk Udang · Sambal & Acar</li><li>Minuman: Es Teler / Es Buah + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 60.000 / porsi · Menu 5</span><h3>Variasi E</h3><ul><li>Nasi Uduk · Sup Tomyam</li><li>Black Paper Beef · Cumi Masak Telur Asin</li><li>Buncis Tofu Cah Udang · Kerupuk Udang · Sambal & Acar</li><li>Minuman: Es Teler / Es Buah + Air Mineral Gelas</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 60.000 / porsi · Menu 6</span><h3>Variasi F</h3><ul><li>Nasi Putih · Sup Sanghai</li><li>Tengkleng Iga</li><li>Gurameh Crispy Asam Manis / Roll Udang</li><li>Sapo Tofu Spesial / Tumis Buncis Udang</li><li>Kerupuk Udang · Sambal & Acar</li><li>Minuman: Es Teler / Es Buah + Air Mineral Gelas</li></ul></div>
+    </div>
+
+    <!-- GUBUG MAKANAN -->
+    <div id="tab-gubug-mk" class="menu-panel">
+      <div class="menu-card"><span class="price-tag">Rp 8.000 / porsi</span><h3>Aneka Jenang / Bubur</h3><ul><li>Aneka jenang tradisional Jawa</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 15.000 / porsi</span><h3>Bakso</h3><ul><li>Bakso segar dengan kuah gurih</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 15.000 / porsi</span><h3>Bakmie Goreng / Godog Jawa</h3><ul><li>Bakmie goreng atau godog khas Jawa</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 18.000 / porsi</span><h3>Empal Gentong Daging</h3><ul><li>Empal gentong daging sapi gurih</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 18.000 / porsi</span><h3>Soto Betawi</h3><ul><li>Soto betawi dengan kuah santan</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 16.000 / porsi</span><h3>Sate Ayam</h3><ul><li>Sate ayam bumbu kacang</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 15.000 / porsi</span><h3>Siomay</h3><ul><li>Siomay dengan saus kacang</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 23.000 / porsi</span><h3>Selad Solo Daging</h3><ul><li>Salad Solo khas dengan daging</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 20.000 / porsi</span><h3>Selad Solo Galantin</h3><ul><li>Salad Solo dengan galantin</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 20.000 / porsi</span><h3>Nasi Liwet Solo</h3><ul><li>Nasi liwet Solo lengkap</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 20.000 / porsi</span><h3>Nasi Gudeg Basah</h3><ul><li>Nasi gudeg basah khas Jogja</li></ul></div>
+    </div>
+
+    <!-- GUBUG MINUMAN -->
+    <div id="tab-gubug-mn" class="menu-panel">
+      <div class="menu-card"><span class="price-tag">Rp 8.000 / porsi</span><h3>Es Teler Simbok</h3><ul><li>Es teler segar khas Mbok Mandeg</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 8.000 / porsi</span><h3>Es Campur Simbok</h3><ul><li>Es campur spesial khas Simbok</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 10.000 / porsi</span><h3>Es Doger</h3><ul><li>Es doger segar</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 8.000 / porsi</span><h3>Es Kelapa G. Jawa</h3><ul><li>Es kelapa gula Jawa</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 8.000 / porsi</span><h3>Es Dawet</h3><ul><li>Es dawet ayu khas Jawa</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 8.000 / porsi</span><h3>Rujak Es Puter</h3><ul><li>Rujak dengan es puter</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 6.000 / porsi</span><h3>Es Krim</h3><ul><li>Es krim segar</li></ul></div>
+      <div class="menu-card"><span class="price-tag">Rp 8.000 / porsi</span><h3>Es Kuwut Bali</h3><ul><li>Es kuwut khas Bali yang menyegarkan</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- BUFFET PRICING -->
+<section id="buffet" style="background:var(--ivory);">
+  <div class="container">
+    <p class="section-label">Wedding Buffet</p>
+    <h2 class="section-title">Paket <em>Prasmanan Wedding</em></h2>
+    <div class="divider"></div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-amount">Rp 40.000</div>
+        <div class="price-unit">per porsi · 5 variasi menu</div>
+        <ul class="price-features">
+          <li>Nasi Putih + Aneka Sup</li><li>Ayam / Telur / Sayuran</li><li>Sambal · Kerupuk</li><li>Dessert: Buah Potong</li><li>Minuman: Teh Panas / Es</li><li>Termasuk penataan & hias meja</li><li>Min. 50 porsi</li>
+        </ul>
+        <a href="https://wa.me/6281229000959?text=Halo%20Mbok%20Mandeg%2C%20saya%20tertarik%20Paket%20Buffet%2040rb" class="btn btn-outline-red" target="_blank">Tanya Ketersediaan</a>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-amount">Rp 45.000</div>
+        <div class="price-unit">per porsi · 5 variasi menu</div>
+        <ul class="price-features">
+          <li>Nasi Putih + Aneka Sup</li><li>Ayam / Udang / Cumi / Gurameh</li><li>Kerupuk Udang · Sambal</li><li>Buah Potong / Puding</li><li>Minuman: Teh Panas / Es + Air Mineral</li><li>Termasuk penataan & hias meja</li><li>Min. 50 porsi</li>
+        </ul>
+        <a href="https://wa.me/6281229000959?text=Halo%20Mbok%20Mandeg%2C%20saya%20tertarik%20Paket%20Buffet%2045rb" class="btn btn-outline-red" target="_blank">Tanya Ketersediaan</a>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-amount">Rp 50.000</div>
+        <div class="price-unit">per porsi · 6 variasi menu</div>
+        <ul class="price-features">
+          <li>Nasi Putih + Aneka Sup</li><li>Ayam / Udang / Cumi / Daging / Seafood</li><li>Mie Goreng / Kwetiau / Brokoli</li><li>Sambal & Acar · Kerupuk Udang</li><li>Minuman: Es Orange Squash + Air Mineral</li><li>Termasuk penataan & hias meja</li><li>Min. 50 porsi</li>
+        </ul>
+        <a href="https://wa.me/6281229000959?text=Halo%20Mbok%20Mandeg%2C%20saya%20tertarik%20Paket%20Buffet%2050rb" class="btn btn-gold" target="_blank">Pesan Sekarang</a>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-amount">Rp 60.000</div>
+        <div class="price-unit">per porsi · 6 variasi menu</div>
+        <ul class="price-features">
+          <li>Nasi Putih / Nasi Uduk</li><li>Aneka Sup Premium</li><li>Gurameh / Udang / Sate / Tengkleng Iga</li><li>Sayuran & Tahu Spesial</li><li>Kerupuk Udang · Sambal & Acar</li><li>Minuman: Es Teler / Es Buah + Air Mineral</li><li>Termasuk penataan & hias meja · Min. 50 porsi</li>
+        </ul>
+        <a href="https://wa.me/6281229000959?text=Halo%20Mbok%20Mandeg%2C%20saya%20tertarik%20Paket%20Buffet%20Premium%2060rb" class="btn btn-outline-red" target="_blank">Tanya Ketersediaan</a>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--gray-lt);font-size:.86rem;margin-top:32px;font-style:italic;">✨ Harga sudah termasuk penataan, hias meja & hiasan rangkaian bunga meja · Min. 50 porsi</p>
+  </div>
+</section>
+
+<!-- KALKULATOR -->
+<section id="kalkulator">
+  <div class="calc-bg"></div>
+  <div class="container">
+    <p class="section-label">Estimasi Biaya</p>
+    <h2 class="section-title">Kalkulator <em>Budget Catering</em></h2>
+    <div class="divider"></div>
+    <div class="calc-wrapper">
+      <p class="calc-hint">Pilih menu, isi jumlah, lalu tambahkan ke daftar. Bisa menambah beberapa menu sekaligus untuk satu acara.</p>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>Jenis Pesanan</label>
+          <select id="c-jenis" onchange="updatePaket()">
+            <option value="buffet">Wedding Buffet (per pax)</option>
+            <option value="gubug_mk">Gubug Makanan (per porsi)</option>
+            <option value="gubug_mn">Gubug Minuman (per porsi)</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label>Pilihan Menu</label>
+          <select id="c-paket" onchange="showDetail()"></select>
+        </div>
+      </div>
+      <div id="menu-detail"></div>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label id="lbl-jumlah">Jumlah Pax / Porsi</label>
+          <input type="number" id="c-jumlah" value="100" min="1" step="10">
+        </div>
+        <div class="calc-field" style="display:flex;align-items:flex-end;">
+          <button onclick="tambahItem()" class="btn btn-gold" style="width:100%;">+ Tambahkan ke Daftar</button>
+        </div>
+      </div>
+      <div id="cart-list"></div>
+      <div class="calc-progress" id="calc-progress" style="display:none;">
+        <div class="progress-labels"><span>Budget Friendly</span><span>Mid-Range</span><span>Premium</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="progress-badge"><span class="budget-badge" id="budget-badge"></span></div>
+      </div>
+      <div class="calc-result">
+        <div class="result-label">Estimasi Total Biaya</div>
+        <div class="result-total" id="result-total">Rp 0</div>
+        <div class="result-breakdown" id="result-breakdown">Belum ada menu ditambahkan.</div>
+      </div>
+      <div style="text-align:center;margin-top:24px;">
+        <a id="wa-pesan" href="#" target="_blank" class="wa-btn">💬 Kirim Estimasi via WhatsApp</a>
+      </div>
+      <p class="calc-note">* Minimum 50 porsi. DP minimal Rp 1.500.000. Harga sudah termasuk penataan & hias meja. Hubungi kami untuk konfirmasi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALERI -->
+<section id="galeri">
+  <div class="container">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Galeri <em>Karya Kami</em></h2>
+    <div class="divider"></div>
+    <div class="gallery-masonry">
+      <div class="gallery-item">
+        <span class="gallery-badge">BEST SELLER</span>
+        <img src="1002470826.jpg" alt="Wedding Buffet Mbok Mandeg" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-title">Wedding Buffet 65rb</div><div class="gallery-overlay-tag">Menu Premium Lengkap</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="1002470883.jpg" alt="Pelaminan Wedding" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-title">Dekorasi Pelaminan</div><div class="gallery-overlay-tag">Momen Istimewa</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="1002470888.jpg" alt="Ayam Serundeng Nasi Box" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-title">Nasi Box Ayam Serundeng</div><div class="gallery-overlay-tag">Sajian Rapi & Lezat</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="1002470889.jpg" alt="Nasi Box Ayam Bumbu Rujak" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-title">Nasi Box Ayam Bumbu Rujak</div><div class="gallery-overlay-tag">Menu Pilihan Terlaris</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="1002470891.jpg" alt="Dekorasi Wedding" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-title">Wedding Setup Mewah</div><div class="gallery-overlay-tag">Detail & Elegan</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="1002470823.jpg" alt="Paket Buffet 55rb" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-title">Wedding Buffet 55rb</div><div class="gallery-overlay-tag">Sajian Istimewa</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="1002470822.jpg" alt="Gubug Menu Mbok Mandeg" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-title">Gubug / Stall</div><div class="gallery-overlay-tag">Aneka Menu Tradisional</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="1002470884.jpg" alt="Logo Mbok Mandeg" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-overlay-title">Mbok Mandeg</div><div class="gallery-overlay-tag">Lezatnya Istimewa</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FASILITAS -->
+<section id="fasilitas" style="background:var(--ivory);">
+  <div class="container">
+    <p class="section-label">Yang Kami Sediakan</p>
+    <h2 class="section-title">Fasilitas <em>Lengkap</em></h2>
+    <div class="divider"></div>
+    <div class="fasilitas-grid">
+      <div class="fas-card reveal"><span class="fas-icon">🌸</span><h4>Hias Meja Termasuk</h4><p>Penataan, hias meja, dan hiasan rangkaian bunga meja sudah termasuk dalam harga — tanpa biaya tambahan.</p></div>
+      <div class="fas-card reveal"><span class="fas-icon">🍽️</span><h4>Peralatan Saji</h4><p>Peralatan alat saji dan alat makan standar yang higienis dan elegan untuk semua tamu.</p></div>
+      <div class="fas-card reveal"><span class="fas-icon">👥</span><h4>Tim Pramusaji</h4><p>Petugas pramusaji & crew produksi berpengalaman disesuaikan jumlah pesanan.</p></div>
+      <div class="fas-card reveal"><span class="fas-icon">🏮</span><h4>Gubug / Stall</h4><p>Aneka gubug makanan & minuman tradisional Jawa untuk memeriahkan resepsi pernikahan.</p></div>
+      <div class="fas-card reveal"><span class="fas-icon">🍲</span><h4>Menu Autentik Jawa</h4><p>Sajian khas Jawa seperti Gudeg, Nasi Liwet, Salad Solo Galantin yang otentik dan lezat.</p></div>
+      <div class="fas-card reveal"><span class="fas-icon">📦</span><h4>Kelebihan Makanan</h4><p>Kelebihan makanan menjadi hak milik pemesan sepenuhnya — tidak ada yang terbuang.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAK -->
+<section id="kontak">
+  <div class="container">
+    <p class="section-label">Hubungi Kami</p>
+    <h2 class="section-title">Pesan & <em>Reservasi</em></h2>
+    <div class="divider"></div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Lokasi</h4>
+            <p>Jl. Parangtritis No.168A Km 2,5<br>Jogokaryan, Yogyakarta</p>
+            <a href="https://maps.app.goo.gl/rcThQA3VbXfJByWYA" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:var(--gold-lt);font-size:.85rem;text-decoration:none;">🗺️ Lihat di Google Maps →</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div>
+            <h4>WhatsApp</h4>
+            <a href="https://wa.me/6281229000959" target="_blank">0812 2900 0959</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Telepon</h4>
+            <p>(0274) 375 055</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📸</div>
+          <div>
+            <h4>Instagram</h4>
+            <a href="https://www.instagram.com/gudegmbokmandeg?igsh=eDllbTVpeWs1M2Rl" target="_blank">@gudegmbokmandeg</a>
+          </div>
+        </div>
+        <a href="https://wa.me/6281229000959?text=Halo%20Mbok%20Mandeg%2C%20saya%20ingin%20reservasi%20catering%20🙏" class="wa-btn" target="_blank">💬 Chat WhatsApp Sekarang</a>
+      </div>
+      <div class="reason-box">
+        <h3>📋 Ketentuan Pemesanan</h3>
+        <ol>
+          <li>Jumlah pesanan minimal 100 porsi.</li>
+          <li>DP minimal Rp 1.500.000 mengikat tanggal dan harga.</li>
+          <li>Pembatalan kurang dari 2 minggu sebelum hari H dikenakan biaya pembatalan.</li>
+          <li>Kelebihan makanan menjadi hak milik pemesan sepenuhnya.</li>
+          <li>Harga sudah termasuk penataan, hias meja, dan hiasan rangkaian bunga meja.</li>
+          <li>Tidak diperbolehkan membawa makanan atau minuman dari luar untuk jamuan.</li>
+          <li>Harga sewaktu-waktu dapat berubah.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <strong>Mbok Mandeg Catering</strong> – Jogokaryan, Yogyakarta</p>
+  <p style="margin-top:8px">Lezatnya Istimewa</p>
+</footer>
+
+<script>
+  function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+  function closeNav() { if (window.innerWidth <= 768) document.getElementById('navLinks').classList.remove('open'); }
+
+  function showTab(name, ev) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const panel = document.getElementById('tab-' + name);
+    panel.classList.add('active');
+    ev.currentTarget.classList.add('active');
+    panel.querySelectorAll('.menu-card').forEach(el => { el.style.opacity='1'; el.style.transform='none'; });
+  }
+
+  const PAKET = {
+    buffet: [
+      ["Buffet 40rb – Variasi A", 40000, "Nasi Putih · Sup Merah · Ayam Goreng Korea Pedas Manis · Telur Lapis Daging · Pakcoy Saus Tiram · Kerupuk · Buah Potong · Teh Panas/Es"],
+      ["Buffet 40rb – Variasi B", 40000, "Nasi Putih · Sup Rolade · Ayam Nangking · Baby Buncis Cah Ayam · Tahu Goreng Laguna · Sambal · Kerupuk · Buah Potong · Teh Panas/Es"],
+      ["Buffet 40rb – Variasi C", 40000, "Nasi Putih · Sup Jagung Sosis · Ayam Goreng Kremes · Telur Fuyunghai · Capcay Sayur · Sambal · Kerupuk · Buah Potong · Teh Panas/Es"],
+      ["Buffet 40rb – Variasi D", 40000, "Nasi Putih · Sup Rolade · Ayam Masak Lada Hitam · Tahu Udang 5 Rasa · Jagung Muda Cah Bakso · Sambal · Kerupuk · Buah Potong · Teh Panas/Es"],
+      ["Buffet 40rb – Variasi E", 40000, "Nasi Putih · Sup Rambutan · Ayam Bakar Kecap · Kembang Kol Cah Sosis · Tahu Saus Telur Asin · Sambal · Kerupuk · Buah Potong · Teh Panas/Es"],
+      ["Buffet 45rb – Variasi A", 45000, "Nasi Putih · Sup Mutiara · Ayam Bakar Taliwang · Cumi Masak Lada Garam · Kailan Cah Baso · Kerupuk Udang · Buah Potong/Puding · Teh Panas/Es + Air Mineral"],
+      ["Buffet 45rb – Variasi B", 45000, "Nasi Putih · Sup Sanghai · Ayam Bakar Bumbu Rujak · Cumi Goreng Tepung · Jagung Muda Cah Daging Giling · Sambal · Kerupuk Udang · Buah Potong/Puding · Teh Panas/Es + Air Mineral"],
+      ["Buffet 45rb – Variasi C", 45000, "Nasi Putih · Sup Tomyam · Chiken Kordon Bleu · Gurameh Pecak · Kembang Kol Cah Baso · Kerupuk Udang · Buah Potong/Puding · Teh Panas/Es + Air Mineral"],
+      ["Buffet 45rb – Variasi D", 45000, "Nasi Putih · Sup Cream Ayam Jamur · Ayam Turki · Udang Goreng Tepung · Kwetiau Goreng · Kerupuk Udang · Sambal · Buah Potong/Puding · Teh Panas/Es + Air Mineral"],
+      ["Buffet 45rb – Variasi E", 45000, "Nasi Putih · Sup Kimlo · Ayam Goreng Hongkong · Gurameh Krispy Bumbu Rujak · Sapo Tofu Ayam · Kerupuk Udang · Buah Potong/Puding · Teh Panas/Es + Air Mineral"],
+      ["Buffet 50rb – Variasi A", 50000, "Nasi Putih · Sup Jagung Sosis · Ayam Mentega/Semur Ayam · Sambal Goreng Krecek/Asem Sandung Lamur · Mie Goreng Jawa · Sambal & Acar · Kerupuk Udang · Es Orange Squash + Air Mineral"],
+      ["Buffet 50rb – Variasi B", 50000, "Nasi Putih · Sup Rambutan · Udang Saus Madu/Roll Udang Crispy · Brokoli Cah Daging Giling · Kwetiau Goreng Spesial/Pangsit Goreng Legino · Sambal & Acar · Kerupuk Udang · Es Orange Squash + Air Mineral"],
+      ["Buffet 50rb – Variasi C", 50000, "Nasi Putih · Sup Mutiara · Empal Serundeng · Gurameh Saos Pesmol · Baby Buncis Cah Ayam · Sambal & Acar · Kerupuk Udang · Es Orange Squash + Air Mineral"],
+      ["Buffet 50rb – Variasi D", 50000, "Nasi Putih · Sup Jamur Champigno · Kreni Daging Krecek · Cumi Crispy Asam Manis · Capcay Goreng Seafood · Sambal & Acar · Kerupuk Udang · Es Orange Squash + Air Mineral"],
+      ["Buffet 50rb – Variasi E", 50000, "Nasi Putih · Ayam Chilipadi · Udang Goreng Tepung Saos Mayo · Capcay Ayam/Brokoli Cah Daging Giling · Mie Goreng Panjang Umur/Pangsit Goreng Legino · Sambal & Acar · Kerupuk Udang · Es Orange Squash + Air Mineral"],
+      ["Buffet 50rb – Variasi F", 50000, "Nasi Putih · Sup Bola Bola Udang · Bistik Daging · Roll Udang Crispy · Oseng Jamur Tahu Sutra · Sambal & Acar · Kerupuk Udang · Es Orange Squash + Air Mineral"],
+      ["Buffet 60rb – Variasi A", 60000, "Nasi Putih · Sup Rolade/Sup Rambutan · Dory Crispy Asam Manis/Udang Tempura Saos Mayo · Sambel Goreng Kreni Ayam · Mie Goreng Jawa/Pakley Sayur · Kerupuk Udang · Sambal & Acar · Es Teler/Es Buah + Air Mineral"],
+      ["Buffet 60rb – Variasi B", 60000, "Nasi Putih · Sup Bunga Sedap Malam · Gurameh Crispy Koloke/Udang Saos Padang · Sukiyaki Yakiniku · Sapo Tahu Special/Asem Daging · Kerupuk Udang · Sambal & Acar · Es Teler/Es Buah + Air Mineral"],
+      ["Buffet 60rb – Variasi C", 60000, "Nasi Putih · Sate Ayam · Udang Saos Padang/Saos Madu · Kwetiau Goreng Spesial · Pakley Ca Baso · Kerupuk Udang · Sambal & Acar · Es Teler/Es Buah + Air Mineral"],
+      ["Buffet 60rb – Variasi D", 60000, "Nasi Putih · Sayur Lodeh · Ayam Goreng Kalasan · Patin Bakar Madu · Telur Pindang · Kerupuk Udang · Sambal & Acar · Es Teler/Es Buah + Air Mineral"],
+      ["Buffet 60rb – Variasi E", 60000, "Nasi Uduk · Sup Tomyam · Black Paper Beef · Cumi Masak Telur Asin · Buncis Tofu Cah Udang · Kerupuk Udang · Sambal & Acar · Es Teler/Es Buah + Air Mineral"],
+      ["Buffet 60rb – Variasi F", 60000, "Nasi Putih · Sup Sanghai · Tengkleng Iga · Gurameh Crispy Asam Manis/Roll Udang · Sapo Tofu Spesial/Tumis Buncis Udang · Kerupuk Udang · Sambal & Acar · Es Teler/Es Buah + Air Mineral"]
+    ],
+    gubug_mk: [
+      ["Aneka Jenang / Bubur", 8000, "Aneka jenang tradisional Jawa"],
+      ["Bakso", 15000, "Bakso segar dengan kuah gurih"],
+      ["Bakmie Goreng / Godog Jawa", 15000, "Bakmie goreng atau godog khas Jawa"],
+      ["Empal Gentong Daging", 18000, "Empal gentong daging sapi gurih"],
+      ["Soto Betawi", 18000, "Soto betawi kuah santan"],
+      ["Sate Ayam", 16000, "Sate ayam bumbu kacang"],
+      ["Siomay", 15000, "Siomay dengan saus kacang"],
+      ["Selad Solo Daging", 23000, "Salad Solo khas dengan daging"],
+      ["Selad Solo Galantin", 20000, "Salad Solo dengan galantin"],
+      ["Nasi Liwet Solo", 20000, "Nasi liwet Solo lengkap"],
+      ["Nasi Gudeg Basah", 20000, "Nasi gudeg basah khas Jogja"]
+    ],
+    gubug_mn: [
+      ["Es Teler Simbok", 8000, "Es teler segar khas Mbok Mandeg"],
+      ["Es Campur Simbok", 8000, "Es campur spesial Simbok"],
+      ["Es Doger", 10000, "Es doger segar"],
+      ["Es Kelapa G. Jawa", 8000, "Es kelapa gula Jawa"],
+      ["Es Dawet", 8000, "Es dawet ayu khas Jawa"],
+      ["Rujak Es Puter", 8000, "Rujak dengan es puter"],
+      ["Es Krim", 6000, "Es krim segar"],
+      ["Es Kuwut Bali", 8000, "Es kuwut khas Bali yang menyegarkan"]
+    ]
+  };
+  const LABELS = { buffet:"Jumlah Pax", gubug_mk:"Jumlah Porsi", gubug_mn:"Jumlah Porsi" };
+  const UNIT   = { buffet:"pax", gubug_mk:"porsi", gubug_mn:"porsi" };
+
+  let cart = [];
+  let animFrame;
+
+  function fmt(n){ return 'Rp ' + Math.round(n).toLocaleString('id-ID'); }
+
+  function updatePaket(){
+    const jenis = document.getElementById('c-jenis').value;
+    const sel = document.getElementById('c-paket');
+    sel.innerHTML = '';
+    PAKET[jenis].forEach(([nama,harga], i) => {
+      const o = document.createElement('option');
+      o.value = i; o.textContent = nama + ' – ' + fmt(harga);
+      sel.appendChild(o);
+    });
+    document.getElementById('lbl-jumlah').textContent = LABELS[jenis];
+    showDetail();
+  }
+
+  function showDetail(){
+    const jenis = document.getElementById('c-jenis').value;
+    const idx   = parseInt(document.getElementById('c-paket').value) || 0;
+    const [nama,,detail] = PAKET[jenis][idx];
+    document.getElementById('menu-detail').innerHTML = '🍽️ <strong>' + nama + ':</strong> ' + detail;
+  }
+
+  function tambahItem(){
+    const jenis  = document.getElementById('c-jenis').value;
+    const idx    = parseInt(document.getElementById('c-paket').value) || 0;
+    const [nama, harga] = PAKET[jenis][idx];
+    const jumlah = parseInt(document.getElementById('c-jumlah').value) || 0;
+    if (jumlah < 1) return;
+    const existing = cart.find(it => it.jenis === jenis && it.idx === idx);
+    if (existing) { existing.jumlah += jumlah; }
+    else { cart.push({ jenis, idx, nama, harga, jumlah, unit: UNIT[jenis] }); }
+    renderCart();
+  }
+
+  function hapusItem(i){ cart.splice(i, 1); renderCart(); }
+
+  function animateNumber(el, target) {
+    cancelAnimationFrame(animFrame);
+    const start = parseInt(el.textContent.replace(/\D/g,'')) || 0;
+    const duration = 400; const startTime = performance.now();
+    function step(now){
+      const p = Math.min((now - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(start + (target - start) * ease));
+      if (p < 1) animFrame = requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function renderCart(){
+    const list = document.getElementById('cart-list');
+    if (cart.length === 0) {
+      list.innerHTML = '<p style="color:rgba(255,255,255,.38);font-size:.84rem;font-style:italic;padding:10px 0 4px;">Belum ada menu. Pilih menu lalu klik "+ Tambahkan ke Daftar".</p>';
+    } else {
+      list.innerHTML = cart.map((it, i) => {
+        const sub = it.harga * it.jumlah;
+        return `<div class="cart-item">
+          <div style="flex:1;"><div class="cart-item-name">${it.nama}</div>
+          <div class="cart-item-sub">${it.jumlah} ${it.unit} × ${fmt(it.harga)} = ${fmt(sub)}</div></div>
+          <button class="cart-del" onclick="hapusItem(${i})">×</button>
+        </div>`;
+      }).join('');
+    }
+
+    let total = 0; let lines = [];
+    cart.forEach(it => {
+      const sub = it.harga * it.jumlah; total += sub;
+      lines.push(`${it.nama}: ${it.jumlah} ${it.unit} × ${fmt(it.harga)} = ${fmt(sub)}`);
+    });
+
+    animateNumber(document.getElementById('result-total'), total);
+    document.getElementById('result-breakdown').textContent = cart.length ? lines.join('\n') + `\n\nTotal = ${fmt(total)}` : 'Belum ada menu ditambahkan.';
+
+    const prog = document.getElementById('calc-progress');
+    const fill = document.getElementById('progress-fill');
+    const badge = document.getElementById('budget-badge');
+    if (total > 0) {
+      prog.style.display = 'block';
+      fill.style.width = Math.min(total / 30000000 * 100, 100) + '%';
+      let label, cls;
+      if (total < 8000000)       { label='Budget Friendly'; cls='badge-friendly'; }
+      else if (total < 20000000) { label='Mid-Range';       cls='badge-mid'; }
+      else                       { label='Premium';          cls='badge-premium'; }
+      badge.textContent = label; badge.className = 'budget-badge ' + cls;
+    } else { prog.style.display = 'none'; }
+
+    const waText = cart.length
+      ? 'Halo Mbok Mandeg, saya mau reservasi catering:\n\n' + cart.map(it => `- ${it.nama}: ${it.jumlah} ${it.unit}`).join('\n') + `\n\nEstimasi total: ${fmt(total)}\n\nMohon info ketersediaan tanggalnya. Terima kasih 🙏`
+      : 'Halo Mbok Mandeg, saya ingin konsultasi catering untuk acara saya 🙏';
+    const waUrl = 'https://wa.me/6281229000959?text=' + encodeURIComponent(waText);
+    document.getElementById('wa-pesan').href = waUrl;
+    document.getElementById('stickyWa').href = waUrl;
+  }
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.reveal, .price-card, .fas-card, .stat').forEach(el => {
+    el.classList.add('reveal'); revealObserver.observe(el);
+  });
+
+  updatePaket();
+  renderCart();
+</script>
+</body>
+</html>
